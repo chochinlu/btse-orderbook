@@ -16,12 +16,20 @@ const OfferPairContainer = styled.div`
 `
 
 export function OrderBook({ data }) {
+  if (!data) {
+    return null
+  }
+
   return (
     <Container>
       <Title>{data.symbol} Order Book (source: BTSE spot websocket data)</Title>
       <OfferPairContainer>
         <OfferBlock quoteType="buy" quote={data.buyQuote} symbol={data.symbol} />
-        <OfferBlock quoteType="sell" quote={data.sellQuote} symbol={data.symbol} />
+        <OfferBlock
+          quoteType="sell"
+          quote={data.sellQuote.sort((a, b) => a.price - b.price)}
+          symbol={data.symbol}
+        />
       </OfferPairContainer>
     </Container>
   )

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { OrderBook } from './components/OrderBook'
 
 const BTSE_SPOT_WEBSOCKET_URL = 'wss://ws.btse.com/ws/spot'
@@ -20,7 +20,8 @@ function App() {
     }
     ws.onmessage = (evt) => {
       // console.log(evt.data)
-      setData(evt.data)
+      const source = JSON.parse(evt.data)
+      setData(source.data)
     }
     ws.onclose = () => {
       console.log('websocket is closed')
@@ -28,11 +29,11 @@ function App() {
     ws.onerror = (error) => {
       console.log(error)
     }
-  })
+  }, [])
 
   return (
     <div>
-      <OrderBook data={data}/>
+      <OrderBook data={data} />
     </div>
   )
 }

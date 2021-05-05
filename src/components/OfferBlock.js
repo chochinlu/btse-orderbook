@@ -1,29 +1,45 @@
-import { useMemo } from 'react'
-
 export function OfferBlock({ quoteType, quote, symbol }) {
-  const [baseCurrency, quoteCurrency] = useMemo(() => {
-    return symbol.split('-')
-  }, [symbol])
+  const [baseCurrency, quoteCurrency] = symbol.split('-')
 
-  const isBid = useMemo(() => {
-    return quoteType === 'buy'
-  }, [quoteType])
+  const isBid = quoteType === 'buy'
 
-  const priceText = useMemo(() => {
-    return isBid ? `Bid Price(${quoteCurrency})` : `Ask Price(${quoteCurrency})`
-  }, [isBid, quoteCurrency])
+  const priceText = isBid ? `Bid Price(${quoteCurrency})` : `Ask Price(${quoteCurrency})`
 
-  const sizeText = useMemo(() => {
-    return isBid ? `Bid Size(${baseCurrency})` : `Ask Size(${baseCurrency})`
-  }, [isBid, baseCurrency])
+  const sizeText = isBid ? `Bid Size(${baseCurrency})` : `Ask Size(${baseCurrency})`
+
+  const head = isBid ? (
+    <thead>
+      <th>{sizeText}</th>
+      <th>{priceText}</th>
+    </thead>
+  ) : (
+    <thead>
+      <th>{priceText}</th>
+      <th>{sizeText}</th>
+    </thead>
+  )
 
   return (
     <div>
       <table>
-        <thead>
-          <th>{priceText}</th>
-          <th>{sizeText}</th>
-        </thead>
+        {head}
+        <tbody>
+          {quote.map((q, index) => (
+            <tr key={`${quoteType}-${index}`}>
+              {isBid ? (
+                <>
+                  <td>{q.size}</td>
+                  <td>{q.price}</td>
+                </>
+              ) : (
+                <>
+                  <td>{q.price}</td>
+                  <td>{q.size}</td>
+                </>
+              )}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   )
