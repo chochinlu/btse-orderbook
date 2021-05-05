@@ -1,9 +1,11 @@
-import { useEffect } from 'react'
+import {useEffect, useState} from 'react'
+import { OrderBook } from './components/OrderBook'
 
 const BTSE_SPOT_WEBSOCKET_URL = 'wss://ws.btse.com/ws/spot'
-// const FTX_WEBSOCKET_URL = 'wss://ftx.com/ws/'
 
 function App() {
+  const [data, setData] = useState(null)
+
   useEffect(() => {
     const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
 
@@ -12,12 +14,13 @@ function App() {
       ws.send(
         JSON.stringify({
           op: 'subscribe',
-          args: ['orderBookApi:BTSE-USDT_0'],
+          args: ['orderBookL2Api:BTSE-USDT_0'],
         }),
       )
     }
     ws.onmessage = (evt) => {
       // console.log(evt.data)
+      setData(evt.data)
     }
     ws.onclose = () => {
       console.log('websocket is closed')
@@ -27,7 +30,11 @@ function App() {
     }
   })
 
-  return <div>FTX-look order book (source: BTSE spot websocket data)</div>
+  return (
+    <div>
+      <OrderBook data={data}/>
+    </div>
+  )
 }
 
 export default App
