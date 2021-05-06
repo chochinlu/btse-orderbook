@@ -1,5 +1,58 @@
 import styled, { keyframes } from 'styled-components'
-import {useEffect, useRef} from 'react'
+import { useEffect, useRef } from 'react'
+
+const Wrapper = styled.div`
+  width: 100%;
+`
+
+const Table = styled.table`
+  width: 100%;
+  display: table;
+  border-spacing: 0;
+  border-collapse: collapse;
+  //border: 1px solid tomato;
+`
+const Th = styled.th`
+  padding: 8px 16px;
+  text-align: left;
+  //border: 1px solid tomato;
+`
+
+const Rth = styled(Th)`
+  text-align: right;
+`
+
+// flash animation
+const flash = (isBid) => keyframes`
+    0%, 100% {
+      background: white;
+    }
+    50% {
+      background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
+    }
+  `
+
+const Tr = styled.tr`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
+  animation-duration: 0.3s;
+`
+
+const Td = styled.td`
+  padding: 4px 16px;
+`
+const Rtd = styled(Td)`
+  text-align: right;
+`
+const Ask = styled.span`
+  font-weight: bold;
+  color: #ff3b69;
+`
+
+const Bid = styled.span`
+  font-weight: bold;
+  color: #02c77a;
+`
 
 export function OfferBlock({ quoteType, quote, symbol }) {
   const prevQuoteRef = useRef(null)
@@ -15,58 +68,6 @@ export function OfferBlock({ quoteType, quote, symbol }) {
   const priceText = isBid ? `Bid Price(${quoteCurrency})` : `Ask Price(${quoteCurrency})`
 
   const sizeText = isBid ? `Bid Size(${baseCurrency})` : `Ask Size(${baseCurrency})`
-
-  const Wrapper = styled.div`
-    width: 100%;
-  `
-
-  const Table = styled.table`
-    width: 100%;
-    display: table;
-    border-spacing: 0;
-    border-collapse: collapse;
-    //border: 1px solid tomato;
-  `
-  const Th = styled.th`
-    padding: 8px 16px;
-    text-align: left;
-    //border: 1px solid tomato;
-  `
-  const Rth = styled(Th)`
-    text-align: right;
-  `
-
-  // flash animation
-  const flash = (isBid) => keyframes`
-    0%, 100% {
-      background: white;
-    }
-    50% {
-      background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
-    }
-  `
-
-  const Tr = styled.tr`
-    border-bottom: 1px solid rgba(0, 0, 0, 0.075);
-    animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
-    animation-duration: 0.3s;
-  `
-
-  const Td = styled.td`
-    padding: 4px 16px;
-  `
-  const Rtd = styled(Td)`
-    text-align: right;
-  `
-  const Ask = styled.span`
-    font-weight: bold;
-    color: #ff3b69;
-  `
-
-  const Bid = styled.span`
-    font-weight: bold;
-    color: #02c77a;
-  `
 
   const head = isBid ? (
     <thead>
@@ -98,23 +99,19 @@ export function OfferBlock({ quoteType, quote, symbol }) {
               {isBid ? (
                 <>
                   <Rtd>
-                    {q.size} p:{prevQuote && prevQuote[index]?.size} total: {q.culmulativeTotal}
+                    {q.size} total: {q.culmulativeTotal}
                   </Rtd>
                   <Rtd>
-                    <Bid>
-                      {q.price} p:{prevQuote && prevQuote[index]?.price}
-                    </Bid>
+                    <Bid>{q.price}</Bid>
                   </Rtd>
                 </>
               ) : (
                 <>
                   <Td>
-                    <Ask>
-                      {q.price} p:{prevQuote && prevQuote[index]?.price}
-                    </Ask>
+                    <Ask>{q.price}</Ask>
                   </Td>
                   <Td>
-                    {q.size} p:{prevQuote && prevQuote[index]?.size} total: {q.culmulativeTotal}
+                    {q.size} total: {q.culmulativeTotal}
                   </Td>
                 </>
               )}
