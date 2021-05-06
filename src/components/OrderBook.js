@@ -17,21 +17,33 @@ const OfferPairContainer = styled.div`
 `
 
 export function OrderBook({ data }) {
-  const buyQuote = data?.buyQuote.map((q, index) => {
-    const size = index - 1 < 0 ? 0 : data.buyQuote[index - 1].size
-    return {
-      ...q,
-      culmulativeTotal: Big(q.size).plus(size).toFixed(4),
-    }
-  })
+  const buyQuote = () => {
+    let culmulativeTotal = 0
+    return data?.buyQuote
+      .sort((a, b) => b.price - a.price)
+      .map((q, index) => {
+        const result = {
+          ...q,
+          culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
+        }
+        culmulativeTotal += Number(q.size)
+        return result
+      })
+  }
 
-  const sellQuote = data?.sellQuote.map((q, index) => {
-    const size = index - 1 < 0 ? 0 : data.sellQuote[index - 1].size
-    return {
-      ...q,
-      culmulativeTotal: Big(q.size).plus(size).toFixed(4),
-    }
-  })
+  const sellQuote = () => {
+    let culmulativeTotal = 0
+    return data?.sellQuote
+      .sort((a, b) => a.price - b.price)
+      .map((q, index) => {
+        const result = {
+          ...q,
+          culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
+        }
+        culmulativeTotal += Number(q.size)
+        return result
+      })
+  }
 
   if (!data) {
     return null
@@ -41,12 +53,8 @@ export function OrderBook({ data }) {
     <Container>
       <Title>{data.symbol} Order Book (source: BTSE spot websocket data)</Title>
       <OfferPairContainer>
-        <OfferBlock quoteType="buy" quote={buyQuote} symbol={data.symbol} />
-        <OfferBlock
-          quoteType="sell"
-          quote={sellQuote.sort((a, b) => a.price - b.price)}
-          symbol={data.symbol}
-        />
+        <OfferBlock quoteType="buy" quote={buyQuote()} symbol={data.symbol} />
+        <OfferBlock quoteType="sell" quote={sellQuote()} symbol={data.symbol} />
       </OfferPairContainer>
     </Container>
   )
