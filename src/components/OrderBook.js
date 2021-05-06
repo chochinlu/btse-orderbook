@@ -17,7 +17,7 @@ const OfferPairContainer = styled.div`
 `
 
 export function OrderBook({ data }) {
-  const buyQuote = () => {
+  const getBuyQuote = () => {
     let culmulativeTotal = 0
     return data?.buyQuote
       .sort((a, b) => b.price - a.price)
@@ -31,7 +31,7 @@ export function OrderBook({ data }) {
       })
   }
 
-  const sellQuote = () => {
+  const getSellQuote = () => {
     let culmulativeTotal = 0
     return data?.sellQuote
       .sort((a, b) => a.price - b.price)
@@ -45,6 +45,13 @@ export function OrderBook({ data }) {
       })
   }
 
+  const buyQuote = getBuyQuote()
+  const sellQuote = getSellQuote()
+  const maxOrderSize = data ? Math.max(
+    Number(buyQuote[buyQuote.length - 1].culmulativeTotal),
+    Number(sellQuote[sellQuote.length - 1].culmulativeTotal),
+  ): 0
+
   if (!data) {
     return null
   }
@@ -53,8 +60,18 @@ export function OrderBook({ data }) {
     <Container>
       <Title>{data.symbol} Order Book (source: BTSE spot websocket data)</Title>
       <OfferPairContainer>
-        <OfferBlock quoteType="buy" quote={buyQuote()} symbol={data.symbol} />
-        <OfferBlock quoteType="sell" quote={sellQuote()} symbol={data.symbol} />
+        <OfferBlock
+          quoteType="buy"
+          quote={buyQuote}
+          symbol={data.symbol}
+          maxOrderSize={maxOrderSize}
+        />
+        <OfferBlock
+          quoteType="sell"
+          quote={sellQuote}
+          symbol={data.symbol}
+          maxOrderSize={maxOrderSize}
+        />
       </OfferPairContainer>
     </Container>
   )

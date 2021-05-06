@@ -1,5 +1,6 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 import { useEffect, useRef } from 'react'
+import Big from 'big.js'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -32,10 +33,30 @@ const flash = (isBid) => keyframes`
     }
   `
 
+const sellBackGround = (percent) => css`
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 59, 105, 0.25),
+    rgba(255, 59, 105, 0.25) ${percent}%,
+    rgba(0, 0, 0, 0) ${percent}%
+  );
+`
+
+const buyBackGround = (percent) => css`
+  background-image: linear-gradient(
+    to left,
+    rgba(2, 199, 122, 0.25),
+    rgba(2, 199, 122, 0.25) ${percent}%,
+    rgba(0, 0, 0, 0) ${percent}%
+  );
+`
+
 const Tr = styled.tr`
   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
   animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
   animation-duration: 0.3s;
+
+  ${(props) => (props.isBid ? buyBackGround(props.percent) : sellBackGround(props.percent))}
 `
 
 const Td = styled.td`
@@ -54,7 +75,7 @@ const Bid = styled.span`
   color: #02c77a;
 `
 
-export function OfferBlock({ quoteType, quote, symbol }) {
+export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
   const prevQuoteRef = useRef(null)
   useEffect(() => {
     prevQuoteRef.current = quote
@@ -68,6 +89,9 @@ export function OfferBlock({ quoteType, quote, symbol }) {
   const priceText = isBid ? `Bid Price(${quoteCurrency})` : `Ask Price(${quoteCurrency})`
 
   const sizeText = isBid ? `Bid Size(${baseCurrency})` : `Ask Size(${baseCurrency})`
+
+  const percent = (culmulativeTotal) =>
+    Big(100).times(culmulativeTotal).div(maxOrderSize).toString()
 
   const head = isBid ? (
     <thead>
@@ -95,12 +119,15 @@ export function OfferBlock({ quoteType, quote, symbol }) {
         {head}
         <tbody>
           {quote.map((q, index) => (
-            <Tr key={`${quoteType}-${index}`} isChanged={isChanged(q, index)} isBid={isBid}>
+            <Tr
+              key={`${quoteType}-${index}`}
+              isChanged={isChanged(q, index)}
+              isBid={isBid}
+              percent={percent(q.culmulativeTotal)}
+            >
               {isBid ? (
                 <>
-                  <Rtd>
-                    {q.size} total: {q.culmulativeTotal}
-                  </Rtd>
+                  <Rtd>{q.size}</Rtd>
                   <Rtd>
                     <Bid>{q.price}</Bid>
                   </Rtd>
@@ -110,9 +137,7 @@ export function OfferBlock({ quoteType, quote, symbol }) {
                   <Td>
                     <Ask>{q.price}</Ask>
                   </Td>
-                  <Td>
-                    {q.size} total: {q.culmulativeTotal}
-                  </Td>
+                  <Td>{q.size}</Td>
                 </>
               )}
             </Tr>
