@@ -1,6 +1,13 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+import {useEffect, useRef} from 'react'
 
 export function OfferBlock({ quoteType, quote, symbol }) {
+  const prevQuoteRef = useRef(null)
+  useEffect(() => {
+    prevQuoteRef.current = quote
+  })
+  const prevQuote = prevQuoteRef.current
+
   const [baseCurrency, quoteCurrency] = symbol.split('-')
 
   const isBid = quoteType === 'buy'
@@ -29,8 +36,20 @@ export function OfferBlock({ quoteType, quote, symbol }) {
     text-align: right;
   `
 
+  // flash animation
+  const flash = (isBid) => keyframes`
+    0%, 100% {
+      background: white;
+    }
+    50% {
+      background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
+    }
+  `
+
   const Tr = styled.tr`
     border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+    animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
+    animation-duration: 0.3s;
   `
 
   const Td = styled.td`
@@ -65,26 +84,38 @@ export function OfferBlock({ quoteType, quote, symbol }) {
     </thead>
   )
 
+  const isChanged = (currentQuote, index) =>
+    prevQuote &&
+    (currentQuote.size !== prevQuote[index]?.size || currentQuote.price !== prevQuote[index]?.price)
+
   return (
     <Wrapper>
       <Table>
         {head}
         <tbody>
           {quote.map((q, index) => (
-            <Tr key={`${quoteType}-${index}`}>
+            <Tr key={`${quoteType}-${index}`} isChanged={isChanged(q, index)} isBid={isBid}>
               {isBid ? (
                 <>
-                  <Rtd>{q.size}</Rtd>
                   <Rtd>
-                    <Bid>{q.price}</Bid>
+                    {q.size} p:{prevQuote && prevQuote[index]?.size} total: {q.culmulativeTotal}
+                  </Rtd>
+                  <Rtd>
+                    <Bid>
+                      {q.price} p:{prevQuote && prevQuote[index]?.price}
+                    </Bid>
                   </Rtd>
                 </>
               ) : (
                 <>
                   <Td>
-                    <Ask>{q.price}</Ask>
+                    <Ask>
+                      {q.price} p:{prevQuote && prevQuote[index]?.price}
+                    </Ask>
                   </Td>
-                  <Td>{q.size}</Td>
+                  <Td>
+                    {q.size} p:{prevQuote && prevQuote[index]?.size} total: {q.culmulativeTotal}
+                  </Td>
                 </>
               )}
             </Tr>

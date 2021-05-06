@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { OrderBook } from './components/OrderBook'
-import GlobalStyle from './globalStyles'
 
 const BTSE_SPOT_WEBSOCKET_URL = 'wss://ws.btse.com/ws/spot'
 
