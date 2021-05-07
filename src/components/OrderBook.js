@@ -17,11 +17,12 @@ const OfferPairContainer = styled.div`
 `
 
 export function OrderBook({ data }) {
-  const getBuyQuote = () => {
+  const getBuyQuote = (length = 20) => {
     let culmulativeTotal = 0
     return data?.buyQuote
       .sort((a, b) => b.price - a.price)
-      .map((q, index) => {
+      .slice(0, length - 1)
+      .map(q => {
         const result = {
           ...q,
           culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
@@ -31,11 +32,12 @@ export function OrderBook({ data }) {
       })
   }
 
-  const getSellQuote = () => {
+  const getSellQuote = (length = 20) => {
     let culmulativeTotal = 0
     return data?.sellQuote
       .sort((a, b) => a.price - b.price)
-      .map((q, index) => {
+      .slice(0, length - 1)
+      .map(q => {
         const result = {
           ...q,
           culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
@@ -47,10 +49,12 @@ export function OrderBook({ data }) {
 
   const buyQuote = getBuyQuote()
   const sellQuote = getSellQuote()
-  const maxOrderSize = data ? Math.max(
-    Number(buyQuote[buyQuote.length - 1].culmulativeTotal),
-    Number(sellQuote[sellQuote.length - 1].culmulativeTotal),
-  ): 0
+  const maxOrderSize = data
+    ? Math.max(
+        Number(buyQuote[buyQuote.length - 1].culmulativeTotal),
+        Number(sellQuote[sellQuote.length - 1].culmulativeTotal),
+      )
+    : 0
 
   if (!data) {
     return null
