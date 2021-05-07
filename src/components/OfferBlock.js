@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { useEffect, useRef } from 'react'
 import Big from 'big.js'
 
@@ -14,6 +14,7 @@ const Table = styled.table`
   //border: 1px solid tomato;
 `
 const Th = styled.th`
+  white-space: nowrap;
   padding: 8px 16px;
   text-align: left;
   //border: 1px solid tomato;
@@ -33,30 +34,28 @@ const flash = (isBid) => keyframes`
     }
   `
 
-const sellBackGround = (percent) => css`
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 59, 105, 0.25),
-    rgba(255, 59, 105, 0.25) ${percent}%,
-    rgba(0, 0, 0, 0) ${percent}%
-  );
-`
-
-const buyBackGround = (percent) => css`
-  background-image: linear-gradient(
-    to left,
-    rgba(2, 199, 122, 0.25),
-    rgba(2, 199, 122, 0.25) ${percent}%,
-    rgba(0, 0, 0, 0) ${percent}%
-  );
-`
+// const sellBackGround = (percent) => css`
+//   background-image: linear-gradient(
+//     to right,
+//     rgba(255, 59, 105, 0.25),
+//     rgba(255, 59, 105, 0.25) ${percent}%,
+//     rgba(0, 0, 0, 0) ${percent}%
+//   );
+// `
+//
+// const buyBackGround = (percent) => css`
+//   background-image: linear-gradient(
+//     to left,
+//     rgba(2, 199, 122, 0.25),
+//     rgba(2, 199, 122, 0.25) ${percent}%,
+//     rgba(0, 0, 0, 0) ${percent}%
+//   );
+// `
 
 const Tr = styled.tr`
   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
   animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
   animation-duration: 0.3s;
-
-  ${(props) => (props.isBid ? buyBackGround(props.percent) : sellBackGround(props.percent))}
 `
 
 const Td = styled.td`

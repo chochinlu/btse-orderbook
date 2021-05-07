@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { OrderBook } from './components/OrderBook'
+import styled from "styled-components";
 
 const BTSE_SPOT_WEBSOCKET_URL = 'wss://ws.btse.com/ws/spot'
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 function App() {
   const [data, setData] = useState(null)
@@ -14,7 +20,7 @@ function App() {
       ws.send(
         JSON.stringify({
           op: 'subscribe',
-          args: ['orderBookL2Api:BTSE-USDT_0'],
+          args: ['orderBookL2Api:BTC-USDT_0'],
         }),
       )
     }
@@ -32,9 +38,9 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <Flex>
       <OrderBook data={data} />
-    </div>
+    </Flex>
   )
 }
 

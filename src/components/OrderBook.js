@@ -6,6 +6,7 @@ const Container = styled.div`
   border-radius: 4px;
   border: 1px solid #e0e0e0;
   box-shadow: #e0e0e0 2px 2px;
+  max-width: 100%;
 `
 
 const Title = styled.p`
