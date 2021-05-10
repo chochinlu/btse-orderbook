@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { useEffect, useRef } from 'react'
 import Big from 'big.js'
 import { BuyRow, SellRow } from './row/Row'
@@ -12,52 +12,16 @@ const Table = styled.table`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
-  //border: 1px solid tomato;
 `
 const Th = styled.th`
   white-space: nowrap;
   padding: 8px 16px;
   text-align: left;
-  //border: 1px solid tomato;
 `
 
 const Rth = styled(Th)`
   text-align: right;
 `
-
-// flash animation
-// const flash = (isBid) => keyframes`
-//     0%, 100% {
-//       background: white;
-//     }
-//     50% {
-//       background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
-//     }
-//   `
-
-// const sellBackGround = (percent) => css`
-//   background-image: linear-gradient(
-//     to right,
-//     rgba(255, 59, 105, 0.25),
-//     rgba(255, 59, 105, 0.25) ${percent}%,
-//     rgba(0, 0, 0, 0) ${percent}%
-//   );
-// `
-//
-// const buyBackGround = (percent) => css`
-//   background-image: linear-gradient(
-//     to left,
-//     rgba(2, 199, 122, 0.25),
-//     rgba(2, 199, 122, 0.25) ${percent}%,
-//     rgba(0, 0, 0, 0) ${percent}%
-//   );
-// `
-
-// const Tr = styled.tr`
-//   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
-//   animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
-//   animation-duration: 0.3s;
-// `
 
 const Td = styled.td`
   padding: 4px 16px;
