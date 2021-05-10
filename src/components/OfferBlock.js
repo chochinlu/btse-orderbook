@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import { useEffect, useRef } from 'react'
 import Big from 'big.js'
+import { BuyRow, SellRow } from './row/Row'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,14 +26,14 @@ const Rth = styled(Th)`
 `
 
 // flash animation
-const flash = (isBid) => keyframes`
-    0%, 100% {
-      background: white;
-    }
-    50% {
-      background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
-    }
-  `
+// const flash = (isBid) => keyframes`
+//     0%, 100% {
+//       background: white;
+//     }
+//     50% {
+//       background: ${isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'};
+//     }
+//   `
 
 // const sellBackGround = (percent) => css`
 //   background-image: linear-gradient(
@@ -52,11 +53,11 @@ const flash = (isBid) => keyframes`
 //   );
 // `
 
-const Tr = styled.tr`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
-  animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
-  animation-duration: 0.3s;
-`
+// const Tr = styled.tr`
+//   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+//   animation-name: ${(props) => (props.isChanged ? flash(props.isBid) : 'none')};
+//   animation-duration: 0.3s;
+// `
 
 const Td = styled.td`
   padding: 4px 16px;
@@ -112,36 +113,35 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
     prevQuote &&
     (currentQuote.size !== prevQuote[index]?.size || currentQuote.price !== prevQuote[index]?.price)
 
+  const row = (quote, index) =>
+    isBid ? (
+      <BuyRow
+        key={`buy-${index}`}
+        isChanged={isChanged(quote, index)}
+        percent={percent(quote.culmulativeTotal)}
+      >
+        <Rtd>{quote.size}</Rtd>
+        <Rtd>
+          <Bid>{quote.price}</Bid>
+        </Rtd>
+      </BuyRow>
+    ) : (
+      <SellRow
+        key={`sell-${index}`}
+        isChanged={isChanged(quote, index)}
+        percent={percent(quote.culmulativeTotal)}
+      >
+        <Td>
+          <Ask>{quote.price}</Ask>
+        </Td>
+        <Td>{quote.size}</Td>
+      </SellRow>
+    )
   return (
     <Wrapper>
       <Table>
         {head}
-        <tbody>
-          {quote.map((q, index) => (
-            <Tr
-              key={`${quoteType}-${index}`}
-              isChanged={isChanged(q, index)}
-              isBid={isBid}
-              percent={percent(q.culmulativeTotal)}
-            >
-              {isBid ? (
-                <>
-                  <Rtd>{q.size}</Rtd>
-                  <Rtd>
-                    <Bid>{q.price}</Bid>
-                  </Rtd>
-                </>
-              ) : (
-                <>
-                  <Td>
-                    <Ask>{q.price}</Ask>
-                  </Td>
-                  <Td>{q.size}</Td>
-                </>
-              )}
-            </Tr>
-          ))}
-        </tbody>
+        <tbody>{quote.map((q, index) => row(q, index))}</tbody>
       </Table>
     </Wrapper>
   )
