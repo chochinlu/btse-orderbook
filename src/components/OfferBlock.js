@@ -6,7 +6,6 @@ import { Row } from './row/Row'
 const Wrapper = styled.div`
   width: 100%;
 `
-
 const Table = styled.table`
   width: 100%;
   display: table;
@@ -22,23 +21,6 @@ const Th = styled.th`
 const Rth = styled(Th)`
   text-align: right;
 `
-
-const Td = styled.td`
-  padding: 4px 16px;
-`
-const Rtd = styled(Td)`
-  text-align: right;
-`
-const Ask = styled.span`
-  font-weight: bold;
-  color: #ff3b69;
-`
-
-const Bid = styled.span`
-  font-weight: bold;
-  color: #02c77a;
-`
-
 export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
   const prevQuoteRef = useRef(null)
   useEffect(() => {
@@ -79,27 +61,12 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
 
   const row = (quote, index) => (
     <Row
+      quote={quote}
       isBid={isBid}
       key={`buy-${index}`}
       isChanged={isChanged(quote, index)}
       percent={percent(quote.culmulativeTotal)}
-    >
-      {isBid ? (
-        <>
-          <Rtd>{quote.size}</Rtd>
-          <Rtd>
-            <Bid>{quote.price}</Bid>
-          </Rtd>
-        </>
-      ) : (
-        <>
-          <Td>
-            <Ask>{quote.price}</Ask>
-          </Td>
-          <Td>{quote.size}</Td>
-        </>
-      )}
-    </Row>
+    />
   )
   return (
     <Wrapper>
