@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useEffect, useRef } from 'react'
 import Big from 'big.js'
-import { BuyRow, SellRow } from './row/Row'
+import { Row } from './row/Row'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -77,30 +77,30 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
     prevQuote &&
     (currentQuote.size !== prevQuote[index]?.size || currentQuote.price !== prevQuote[index]?.price)
 
-  const row = (quote, index) =>
-    isBid ? (
-      <BuyRow
-        key={`buy-${index}`}
-        isChanged={isChanged(quote, index)}
-        percent={percent(quote.culmulativeTotal)}
-      >
-        <Rtd>{quote.size}</Rtd>
-        <Rtd>
-          <Bid>{quote.price}</Bid>
-        </Rtd>
-      </BuyRow>
-    ) : (
-      <SellRow
-        key={`sell-${index}`}
-        isChanged={isChanged(quote, index)}
-        percent={percent(quote.culmulativeTotal)}
-      >
-        <Td>
-          <Ask>{quote.price}</Ask>
-        </Td>
-        <Td>{quote.size}</Td>
-      </SellRow>
-    )
+  const row = (quote, index) => (
+    <Row
+      isBid={isBid}
+      key={`buy-${index}`}
+      isChanged={isChanged(quote, index)}
+      percent={percent(quote.culmulativeTotal)}
+    >
+      {isBid ? (
+        <>
+          <Rtd>{quote.size}</Rtd>
+          <Rtd>
+            <Bid>{quote.price}</Bid>
+          </Rtd>
+        </>
+      ) : (
+        <>
+          <Td>
+            <Ask>{quote.price}</Ask>
+          </Td>
+          <Td>{quote.size}</Td>
+        </>
+      )}
+    </Row>
+  )
   return (
     <Wrapper>
       <Table>
