@@ -18,12 +18,16 @@ const OfferPairContainer = styled.div`
 `
 
 export function OrderBook({ data }) {
-  const getBuyQuote = (length = 20) => {
+  // console.log(data)
+  const getQuote = (quoteType, quote, length = 100) => {
+    if (!quote) {
+      return {}
+    }
     let culmulativeTotal = 0
-    return data?.buyQuote
-      .sort((a, b) => b.price - a.price)
+    return quote
+      .sort((a, b) => (quoteType === 'buy' ? b.price - a.price : a.price - b.price))
       .slice(0, length - 1)
-      .map(q => {
+      .map((q) => {
         const result = {
           ...q,
           culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
@@ -33,23 +37,8 @@ export function OrderBook({ data }) {
       })
   }
 
-  const getSellQuote = (length = 20) => {
-    let culmulativeTotal = 0
-    return data?.sellQuote
-      .sort((a, b) => a.price - b.price)
-      .slice(0, length - 1)
-      .map(q => {
-        const result = {
-          ...q,
-          culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
-        }
-        culmulativeTotal += Number(q.size)
-        return result
-      })
-  }
-
-  const buyQuote = getBuyQuote()
-  const sellQuote = getSellQuote()
+  const buyQuote = getQuote('buy', data?.buyQuote)
+  const sellQuote = getQuote('sell', data?.sellQuote)
   const maxOrderSize = data
     ? Math.max(
         Number(buyQuote[buyQuote.length - 1].culmulativeTotal),

@@ -34,10 +34,18 @@ export function Row(props) {
   return (
     <tr className={'row'} style={style}>
       <td className={'cell'} style={tdStyle}>
-        {props.isBid ? props.quote.size : <Ask>{props.quote.price}</Ask>}
+        {props.isBid ? (
+          Number(props.quote.size).toLocaleString()
+        ) : (
+          <Ask>{Number(props.quote.price).toLocaleString()}</Ask>
+        )}
       </td>
       <td className={'cell'} style={tdStyle}>
-        {props.isBid ? <Bid>{props.quote.price}</Bid> : props.quote.size}
+        {props.isBid ? (
+          <Bid>{Number(props.quote.price).toLocaleString()}</Bid>
+        ) : (
+          Number(props.quote.size).toLocaleString()
+        )}
       </td>
     </tr>
   )
