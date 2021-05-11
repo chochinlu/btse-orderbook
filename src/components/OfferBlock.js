@@ -11,16 +11,16 @@ const Table = styled.table`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+  font-size: 16px;
+  font-weight: 300;
 `
 const Th = styled.th`
+  color: rgba(0, 0, 0, 0.54);
   white-space: nowrap;
   padding: 8px 16px;
-  text-align: left;
+  text-align: ${(props) => (props.isBid ? 'right' : 'left')};
 `
 
-const Rth = styled(Th)`
-  text-align: right;
-`
 export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
   const prevQuoteRef = useRef(null)
   useEffect(() => {
@@ -32,25 +32,18 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
 
   const isBid = quoteType === 'buy'
 
-  const priceText = isBid ? `Bid Price(${quoteCurrency})` : `Ask Price(${quoteCurrency})`
+  const priceText = `${isBid ? 'Bid' : 'Ask'} Price(${quoteCurrency})`
 
-  const sizeText = isBid ? `Bid Size(${baseCurrency})` : `Ask Size(${baseCurrency})`
+  const sizeText = `${isBid ? 'Bid' : 'Ask'} Size(${baseCurrency})`
 
   const percent = (culmulativeTotal) =>
     Big(100).times(culmulativeTotal).div(maxOrderSize).toString()
 
-  const head = isBid ? (
+  const head = (
     <thead>
       <tr>
-        <Rth>{sizeText}</Rth>
-        <Rth>{priceText}</Rth>
-      </tr>
-    </thead>
-  ) : (
-    <thead>
-      <tr>
-        <Th>{priceText}</Th>
-        <Th>{sizeText}</Th>
+        <Th isBid={isBid}>{isBid ? sizeText : priceText}</Th>
+        <Th isBid={isBid}>{isBid ? priceText : sizeText}</Th>
       </tr>
     </thead>
   )
