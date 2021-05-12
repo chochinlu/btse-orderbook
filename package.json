@@ -1,7 +1,7 @@
 {
   "name": "ftx-look-orderbook",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://github.com/chochinlu/btse-orderbook",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
