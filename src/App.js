@@ -20,7 +20,7 @@ function App() {
       ws.send(
         JSON.stringify({
           op: 'subscribe',
-          args: ['orderBookL2Api:BTC-USDT_0'],
+          args: ['orderBookL2Api:BTSE-USDT_0'],
         }),
       )
     }
