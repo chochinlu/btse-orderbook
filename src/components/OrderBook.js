@@ -7,14 +7,22 @@ const Container = styled.div`
   border: 1px solid #e0e0e0;
   box-shadow: #e0e0e0 2px 2px;
   max-width: 100%;
+  position: relative;
 `
 
-const Title = styled.p`
+const Title = styled.div`
   text-align: center;
+  padding: 16px 0;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `
 
 const OfferPairContainer = styled.div`
   display: flex;
+  height: calc(100vh - 70px);
+  overflow: scroll;
 `
 
 export function OrderBook({ data }) {

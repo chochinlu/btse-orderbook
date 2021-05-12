@@ -19,6 +19,10 @@ const Th = styled.th`
   white-space: nowrap;
   padding: 8px 16px;
   text-align: ${(props) => (props.isBid ? 'right' : 'left')};
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `
 
 export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
