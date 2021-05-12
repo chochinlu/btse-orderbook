@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/chochinlu/btse-orderbook/static/css/main.7e8253d1.chunk.css",
+    "main.js": "/chochinlu/btse-orderbook/static/js/main.23b222dd.chunk.js",
+    "main.js.map": "/chochinlu/btse-orderbook/static/js/main.23b222dd.chunk.js.map",
+    "runtime-main.js": "/chochinlu/btse-orderbook/static/js/runtime-main.025e7744.js",
+    "runtime-main.js.map": "/chochinlu/btse-orderbook/static/js/runtime-main.025e7744.js.map",
+    "static/js/2.de436229.chunk.js": "/chochinlu/btse-orderbook/static/js/2.de436229.chunk.js",
+    "static/js/2.de436229.chunk.js.map": "/chochinlu/btse-orderbook/static/js/2.de436229.chunk.js.map",
+    "static/js/3.8c5a457d.chunk.js": "/chochinlu/btse-orderbook/static/js/3.8c5a457d.chunk.js",
+    "static/js/3.8c5a457d.chunk.js.map": "/chochinlu/btse-orderbook/static/js/3.8c5a457d.chunk.js.map",
+    "index.html": "/chochinlu/btse-orderbook/index.html",
+    "static/css/main.7e8253d1.chunk.css.map": "/chochinlu/btse-orderbook/static/css/main.7e8253d1.chunk.css.map",
+    "static/js/2.de436229.chunk.js.LICENSE.txt": "/chochinlu/btse-orderbook/static/js/2.de436229.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.025e7744.js",
+    "static/js/2.de436229.chunk.js",
+    "static/css/main.7e8253d1.chunk.css",
+    "static/js/main.23b222dd.chunk.js"
+  ]
+}
