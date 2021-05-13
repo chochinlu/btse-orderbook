@@ -1,7 +1,5 @@
 import './Row.css'
 import styled from 'styled-components'
-import { useState } from 'react'
-import { InfoPopup } from '../InfoPopup'
 import { toLocale } from '../../util/util'
 
 const Ask = styled.span`
@@ -15,8 +13,6 @@ const Bid = styled.span`
 `
 
 export function Row(props) {
-  const [showInfoPopup, setShowInfoPopup] = useState(false)
-
   const direction = props.isBid ? 'left' : 'right'
   const color = props.isBid ? 'rgba(2, 199, 122, 0.25)' : 'rgba(255, 59, 105, 0.25)'
   const flash = props.isBid ? 'buyFlash' : 'sellFlash'
@@ -36,25 +32,19 @@ export function Row(props) {
     textAlign: props.isBid ? 'right' : 'left',
   }
 
-  const handleMouseEnter = () => {
-    setShowInfoPopup(true)
-    // console.log(showInfoPopup)
+  const handleEnter = () => {
+    props.handleMouseEnter(props.quote)
+    props.setCurrentIndex(props.index)
   }
 
-  const handleMouseLeave = () => {
-    setShowInfoPopup(false)
-    // console.log(showInfoPopup)
+  const handleLeave = () => {
+    props.handleMouseLeave()
+    props.setCurrentIndex(null)
   }
 
   return (
-    <tr
-      className={'row'}
-      style={style}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <tr className={'row'} style={style} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <td className={'cell'} style={tdStyle}>
-        {showInfoPopup && <InfoPopup quote={props.quote} />}
         {props.isBid ? toLocale(props.quote.size) : <Ask>{toLocale(props.quote.price)}</Ask>}
       </td>
       <td className={'cell'} style={tdStyle}>

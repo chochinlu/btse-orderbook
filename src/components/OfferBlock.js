@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Big from 'big.js'
 import { Row } from './row/Row'
+import { InfoPopup } from './InfoPopup'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,6 +27,10 @@ const Th = styled.th`
 `
 
 export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
+  const [showInfoPopup, setShowInfoPopup] = useState(false)
+  const [currentQuote, setCurrentQuote] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(null)
+
   const prevQuoteRef = useRef(null)
   useEffect(() => {
     prevQuoteRef.current = quote
@@ -42,6 +47,18 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
 
   const percent = (culmulativeTotal) =>
     Big(100).times(culmulativeTotal).div(maxOrderSize).toString()
+
+  const handleMouseEnter = (quote) => {
+    setShowInfoPopup(true)
+    setCurrentQuote(quote)
+    // console.log(showInfoPopup)
+  }
+
+  const handleMouseLeave = () => {
+    setShowInfoPopup(false)
+    setCurrentQuote(null)
+    // console.log(showInfoPopup)
+  }
 
   const head = (
     <thead>
@@ -63,10 +80,17 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
       key={`buy-${index}`}
       isChanged={isChanged(quote, index)}
       percent={percent(quote.culmulativeTotal)}
+      handleMouseEnter={handleMouseEnter}
+      handleMouseLeave={handleMouseLeave}
+      setCurrentIndex={setCurrentIndex}
+      index={index}
     />
   )
   return (
     <Wrapper>
+      {showInfoPopup && (
+        <InfoPopup isBid={isBid} quote={currentQuote} currentIndex={currentIndex} />
+      )}
       <Table>
         {head}
         <tbody>{quote.map((q, index) => row(q, index))}</tbody>
