@@ -32,7 +32,12 @@ export function Row(props) {
   }
 
   return (
-    <tr className={'row'} style={style}>
+    <tr
+      className={'row'}
+      style={style}
+      onMouseEnter={props.handleMouseEnter}
+      onMouseLeave={props.handleMouseLeave}
+    >
       <td className={'cell'} style={tdStyle}>
         {props.isBid ? (
           Number(props.quote.size).toLocaleString()
