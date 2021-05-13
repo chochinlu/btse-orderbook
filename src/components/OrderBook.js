@@ -32,13 +32,20 @@ export function OrderBook({ data }) {
       return {}
     }
     let culmulativeTotal = 0
+    let sum = Big(0)
     return quote
       .sort((a, b) => (quoteType === 'buy' ? b.price - a.price : a.price - b.price))
       .slice(0, length - 1)
       .map((q) => {
+        const base = Big(q.price).times(q.size)
+        sum = sum.plus(base)
+        const total = Big(q.size).plus(culmulativeTotal)
+        const avg = Big(sum).div(total)
+
         const result = {
           ...q,
-          culmulativeTotal: Big(q.size).plus(culmulativeTotal).toFixed(4),
+          culmulativeTotal: total.toFixed(4),
+          avg: avg.toFixed(4),
         }
         culmulativeTotal += Number(q.size)
         return result
