@@ -5,6 +5,8 @@ const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap');
   body {
     font-family: 'Lato', 'Noto Sans TC', sans-serif ;
+    margin:0 ;
+    padding: 0;
   }
 `
 export default GlobalStyle

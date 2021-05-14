@@ -1,5 +1,4 @@
 import {InfoPopup} from "./InfoPopup";
-import {mock} from "./mock";
 
 export default {
     title: 'View/InfoPopup',
