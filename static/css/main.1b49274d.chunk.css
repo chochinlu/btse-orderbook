@@ -1,0 +1,2 @@
+@-webkit-keyframes buyFlash{0%,to{background-color:transparent}50%{background-color:rgba(2,199,122,.25)}}@keyframes buyFlash{0%,to{background-color:transparent}50%{background-color:rgba(2,199,122,.25)}}@-webkit-keyframes sellFlash{0%,to{background-color:transparent}50%{background-color:rgba(255,59,105,.25)}}@keyframes sellFlash{0%,to{background-color:transparent}50%{background-color:rgba(255,59,105,.25)}}.row{border-bottom:1px solid rgba(0,0,0,.075);cursor:pointer}.cell{padding:4px 16px}
+/*# sourceMappingURL=main.1b49274d.chunk.css.map */
