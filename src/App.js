@@ -19,6 +19,12 @@ function App() {
   const [baseCurrency, setBaseCurrency] = useState(BASE_CURRENCY.BTSE)
   const [data, setData] = useState(null)
 
+  // const prevBaseCurrencyRef = useRef()
+  // useEffect(() => {
+  //   prevBaseCurrencyRef.current = baseCurrency
+  // })
+  // const prevBaseCurrency = prevBaseCurrencyRef.current
+
   useEffect(() => {
     const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
     ws.onopen = () => {
@@ -41,7 +47,7 @@ function App() {
     ws.onerror = (error) => {
       console.log(error)
     }
-  },[])
+  }, [])
 
   return (
     <Flex>
