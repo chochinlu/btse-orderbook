@@ -48,16 +48,16 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
   const percent = (culmulativeTotal) =>
     Big(100).times(culmulativeTotal).div(maxOrderSize).toString()
 
-  const handleMouseEnter = (quote) => {
+  const handleMouseEnter = (index) => (quote) => {
     setShowInfoPopup(true)
     setCurrentQuote(quote)
-    // console.log(showInfoPopup)
+    setCurrentIndex(index)
   }
 
   const handleMouseLeave = () => {
     setShowInfoPopup(false)
     setCurrentQuote(null)
-    // console.log(showInfoPopup)
+    setCurrentIndex(null)
   }
 
   const head = (
@@ -80,14 +80,12 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
       key={`buy-${index}`}
       isChanged={isChanged(quote, index)}
       percent={percent(quote.culmulativeTotal)}
-      handleMouseEnter={handleMouseEnter}
+      handleMouseEnter={handleMouseEnter(index)}
       handleMouseLeave={handleMouseLeave}
-      setCurrentIndex={setCurrentIndex}
-      index={index}
     />
   )
   return (
-    <Wrapper>
+    <Wrapper onMouseLeave={handleMouseLeave}>
       {showInfoPopup && (
         <InfoPopup isBid={isBid} quote={currentQuote} currentIndex={currentIndex} />
       )}

@@ -21,13 +21,13 @@ const Title = styled.div`
 
 const OfferPairContainer = styled.div`
   display: flex;
-  height: calc(100vh - 70px);
-  overflow: scroll;
+  //height: calc(100vh - 70px);
+  //overflow: scroll;
 `
 
 export function OrderBook({ data }) {
   // console.log(data)
-  const getQuote = (quoteType, quote, length = 100) => {
+  const getQuote = (quoteType, quote, length = 20) => {
     if (!quote) {
       return {}
     }

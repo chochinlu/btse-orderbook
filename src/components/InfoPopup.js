@@ -12,8 +12,8 @@ const Wrapper = styled.div`
 
   background: white;
   position: absolute;
-  top: ${props => props.top}px;
-  ${props => props.isBid ? 'left: 20px' : 'right: 20px'};
+  top: ${(props) => props.top}px;
+  ${(props) => (props.isBid ? 'left: 5px' : 'right: 5px')};
   z-index: 2;
 
   span:first-child {
@@ -27,12 +27,10 @@ const Wrapper = styled.div`
 `
 
 export function InfoPopup(props) {
-  const top = (Number(props.currentIndex) + 1) * 28 + 84
+  const top = (Number(props.currentIndex) + 1) * 27 + 84
   return (
     <Wrapper top={top} isBid={props.isBid}>
-      <span>
-        {props.currentIndex} Average Price: {toLocale(props.quote.avg)}
-      </span>
+      <span>Average Price: {toLocale(props.quote.avg)}</span>
       <span>
         Total: {toLocale(props.quote.culmulativeTotal)} {props.currency}
       </span>

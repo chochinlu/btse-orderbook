@@ -34,16 +34,11 @@ export function Row(props) {
 
   const handleEnter = () => {
     props.handleMouseEnter(props.quote)
-    props.setCurrentIndex(props.index)
   }
 
-  const handleLeave = () => {
-    props.handleMouseLeave()
-    props.setCurrentIndex(null)
-  }
 
   return (
-    <tr className={'row'} style={style} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+    <tr className={'row'} style={style} onMouseEnter={handleEnter}>
       <td className={'cell'} style={tdStyle}>
         {props.isBid ? toLocale(props.quote.size) : <Ask>{toLocale(props.quote.price)}</Ask>}
       </td>
