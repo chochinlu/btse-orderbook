@@ -16,19 +16,17 @@ const Main = styled.div`
 `
 
 function App() {
-  const [ws] = useState(new WebSocket(BTSE_SPOT_WEBSOCKET_URL))
   const [baseCurrency, setBaseCurrency] = useState(BASE_CURRENCY.BTSE)
   const [data, setData] = useState(null)
 
-  const subscribeTarget = `orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`
-
   useEffect(() => {
+    const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
     ws.onopen = () => {
       console.log('websocket is open now')
       ws.send(
         JSON.stringify({
           op: 'subscribe',
-          args: [subscribeTarget],
+          args: [`orderBookL2Api:BTSE-${QUOTE_CURRENCY}_0`],
         }),
       )
     }
@@ -43,7 +41,7 @@ function App() {
     ws.onerror = (error) => {
       console.log(error)
     }
-  }, [ws, subscribeTarget])
+  },[])
 
   return (
     <Flex>
