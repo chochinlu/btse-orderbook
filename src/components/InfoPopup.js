@@ -27,6 +27,9 @@ const Wrapper = styled.div`
 `
 
 export function InfoPopup(props) {
+  if (!props.quote) {
+    return null
+  }
   const top = (Number(props.currentIndex) + 1) * 27 + 84
   return (
     <Wrapper top={top} isBid={props.isBid}>

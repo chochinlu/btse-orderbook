@@ -48,17 +48,19 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
   const percent = (culmulativeTotal) =>
     Big(100).times(culmulativeTotal).div(maxOrderSize).toString()
 
-  const handleMouseEnter = (index) => (quote) => {
+  const handleMouseEnter = (index) => () => {
     setShowInfoPopup(true)
-    setCurrentQuote(quote)
     setCurrentIndex(index)
   }
 
   const handleMouseLeave = () => {
     setShowInfoPopup(false)
-    setCurrentQuote(null)
     setCurrentIndex(null)
   }
+
+  useEffect(() => {
+    setCurrentQuote(quote[currentIndex] ? quote[currentIndex] : null)
+  }, [currentIndex, quote])
 
   const head = (
     <thead>
