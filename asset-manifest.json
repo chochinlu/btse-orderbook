@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/btse-orderbook/static/css/main.1b49274d.chunk.css",
-    "main.js": "/btse-orderbook/static/js/main.5d2c022c.chunk.js",
-    "main.js.map": "/btse-orderbook/static/js/main.5d2c022c.chunk.js.map",
+    "main.js": "/btse-orderbook/static/js/main.2f8eedbb.chunk.js",
+    "main.js.map": "/btse-orderbook/static/js/main.2f8eedbb.chunk.js.map",
     "runtime-main.js": "/btse-orderbook/static/js/runtime-main.6c1a1e3d.js",
     "runtime-main.js.map": "/btse-orderbook/static/js/runtime-main.6c1a1e3d.js.map",
-    "static/js/2.e12d51d8.chunk.js": "/btse-orderbook/static/js/2.e12d51d8.chunk.js",
-    "static/js/2.e12d51d8.chunk.js.map": "/btse-orderbook/static/js/2.e12d51d8.chunk.js.map",
+    "static/js/2.50412c3d.chunk.js": "/btse-orderbook/static/js/2.50412c3d.chunk.js",
+    "static/js/2.50412c3d.chunk.js.map": "/btse-orderbook/static/js/2.50412c3d.chunk.js.map",
     "static/js/3.8c5a457d.chunk.js": "/btse-orderbook/static/js/3.8c5a457d.chunk.js",
     "static/js/3.8c5a457d.chunk.js.map": "/btse-orderbook/static/js/3.8c5a457d.chunk.js.map",
     "index.html": "/btse-orderbook/index.html",
     "static/css/main.1b49274d.chunk.css.map": "/btse-orderbook/static/css/main.1b49274d.chunk.css.map",
-    "static/js/2.e12d51d8.chunk.js.LICENSE.txt": "/btse-orderbook/static/js/2.e12d51d8.chunk.js.LICENSE.txt"
+    "static/js/2.50412c3d.chunk.js.LICENSE.txt": "/btse-orderbook/static/js/2.50412c3d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6c1a1e3d.js",
-    "static/js/2.e12d51d8.chunk.js",
+    "static/js/2.50412c3d.chunk.js",
     "static/css/main.1b49274d.chunk.css",
-    "static/js/main.5d2c022c.chunk.js"
+    "static/js/main.2f8eedbb.chunk.js"
   ]
 }
