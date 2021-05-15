@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { OrderBook } from './components/OrderBook'
 import styled from 'styled-components'
 import { Menu } from './components/Menu'
@@ -19,12 +19,13 @@ function App() {
   const [baseCurrency, setBaseCurrency] = useState(BASE_CURRENCY.BTSE)
   const [data, setData] = useState(null)
 
-  // const prevBaseCurrencyRef = useRef()
-  // useEffect(() => {
-  //   prevBaseCurrencyRef.current = baseCurrency
-  // })
-  // const prevBaseCurrency = prevBaseCurrencyRef.current
+  const prevBaseCurrencyRef = useRef()
+  useEffect(() => {
+    prevBaseCurrencyRef.current = baseCurrency
+  })
+  const prevBaseCurrency = prevBaseCurrencyRef.current
 
+  const socketRef = useRef()
   useEffect(() => {
     const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
     ws.onopen = () => {
@@ -32,7 +33,7 @@ function App() {
       ws.send(
         JSON.stringify({
           op: 'subscribe',
-          args: [`orderBookL2Api:BTC-${QUOTE_CURRENCY}_0`],
+          args: [`orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`],
         }),
       )
     }
@@ -47,12 +48,28 @@ function App() {
     ws.onerror = (error) => {
       console.log(error)
     }
+
+    socketRef.current = ws
   }, [])
+
+  useEffect(() => {
+    if (socketRef.current.readyState === 1) {
+      socketRef.current.send(
+        JSON.stringify({
+          op: 'unsubscribe',
+          args: [`orderBookL2Api:${prevBaseCurrency}-${QUOTE_CURRENCY}_0`],
+        }))
+      socketRef.current.send(
+        JSON.stringify({
+          op: 'subscribe',
+          args: [`orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`],
+        }))
+    }
+  }, [baseCurrency, prevBaseCurrency])
 
   return (
     <Flex>
       <Menu setBaseCurrency={setBaseCurrency} />
-      <p>{baseCurrency}</p>
       <Main>
         <OrderBook data={data} baseCurrency={baseCurrency} />
       </Main>
