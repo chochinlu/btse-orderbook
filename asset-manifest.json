@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/btse-orderbook/static/css/main.1b49274d.chunk.css",
-    "main.js": "/btse-orderbook/static/js/main.23de7e78.chunk.js",
-    "main.js.map": "/btse-orderbook/static/js/main.23de7e78.chunk.js.map",
+    "main.js": "/btse-orderbook/static/js/main.905e2a6f.chunk.js",
+    "main.js.map": "/btse-orderbook/static/js/main.905e2a6f.chunk.js.map",
     "runtime-main.js": "/btse-orderbook/static/js/runtime-main.6c1a1e3d.js",
     "runtime-main.js.map": "/btse-orderbook/static/js/runtime-main.6c1a1e3d.js.map",
     "static/js/2.8059dbdc.chunk.js": "/btse-orderbook/static/js/2.8059dbdc.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.6c1a1e3d.js",
     "static/js/2.8059dbdc.chunk.js",
     "static/css/main.1b49274d.chunk.css",
-    "static/js/main.23de7e78.chunk.js"
+    "static/js/main.905e2a6f.chunk.js"
   ]
 }
