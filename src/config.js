@@ -4,7 +4,8 @@ const QUOTE_CURRENCY = 'USDT'
 
 const BASE_CURRENCY = {
   BTSE: 'BTSE',
-  BTC : 'BTC'
+  BTC : 'BTC',
+  ETH: 'ETH'
 }
 
 export {
