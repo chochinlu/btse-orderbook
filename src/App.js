@@ -19,6 +19,8 @@ function App() {
   const [baseCurrency, setBaseCurrency] = useState(BASE_CURRENCY.BTSE)
   const [data, setData] = useState(null)
 
+  const hasWs = useRef(false)
+
   const prevBaseCurrencyRef = useRef()
   useEffect(() => {
     prevBaseCurrencyRef.current = baseCurrency
@@ -27,30 +29,33 @@ function App() {
 
   const socketRef = useRef()
   useEffect(() => {
-    const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
-    ws.onopen = () => {
-      console.log('websocket is open now')
-      ws.send(
-        JSON.stringify({
-          op: 'subscribe',
-          args: [`orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`],
-        }),
-      )
-    }
-    ws.onmessage = (evt) => {
-      // console.log(evt.data)
-      const source = JSON.parse(evt.data)
-      setData(source.data)
-    }
-    ws.onclose = () => {
-      console.log('websocket is closed')
-    }
-    ws.onerror = (error) => {
-      console.log(error)
-    }
+    if (!hasWs.current) {
+      const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL)
+      ws.onopen = () => {
+        console.log('websocket is open now')
+        ws.send(
+          JSON.stringify({
+            op: 'subscribe',
+            args: [`orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`],
+          }),
+        )
+      }
+      ws.onmessage = (evt) => {
+        // console.log(evt.data)
+        const source = JSON.parse(evt.data)
+        setData(source.data)
+      }
+      ws.onclose = () => {
+        console.log('websocket is closed')
+      }
+      ws.onerror = (error) => {
+        console.log(error)
+      }
 
-    socketRef.current = ws
-  }, [])
+      socketRef.current = ws
+      hasWs.current = true
+    }
+  }, [baseCurrency])
 
   useEffect(() => {
     if (socketRef.current.readyState === 1) {
@@ -58,12 +63,14 @@ function App() {
         JSON.stringify({
           op: 'unsubscribe',
           args: [`orderBookL2Api:${prevBaseCurrency}-${QUOTE_CURRENCY}_0`],
-        }))
+        }),
+      )
       socketRef.current.send(
         JSON.stringify({
           op: 'subscribe',
           args: [`orderBookL2Api:${baseCurrency}-${QUOTE_CURRENCY}_0`],
-        }))
+        }),
+      )
     }
   }, [baseCurrency, prevBaseCurrency])
 
