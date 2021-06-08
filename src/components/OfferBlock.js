@@ -71,9 +71,12 @@ export function OfferBlock({ quoteType, quote, symbol, maxOrderSize }) {
     </thead>
   )
 
+  // const isChanged = (currentQuote, index) =>
+  //   prevQuote &&
+  //   (currentQuote.size !== prevQuote[index]?.size || currentQuote.price !== prevQuote[index]?.price)
+
   const isChanged = (currentQuote, index) =>
-    prevQuote &&
-    (currentQuote.size !== prevQuote[index]?.size || currentQuote.price !== prevQuote[index]?.price)
+    prevQuote && currentQuote.size !== prevQuote[index]?.size
 
   const row = (quote, index) => (
     <Row
