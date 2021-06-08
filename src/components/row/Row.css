@@ -1,27 +1,46 @@
-
 @keyframes buyFlash {
-    0%, 100% {
-        background-color: transparent;
-    }
-    50% {
-        background-color: rgba(2, 199, 122, 0.25);
-    }
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(2, 199, 122, 0.25);
+  }
 }
 
 @keyframes sellFlash {
-    0%, 100% {
-        background-color: transparent;
-    }
-    50% {
-        background-color: rgba(255, 59, 105, 0.25);
-    }
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(255, 59, 105, 0.25);
+  }
 }
 
 .row {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.075);
-    cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+}
+
+.buy-animation {
+  animation-name: buyFlash;
+  animation-duration: 0.2s;
+}
+
+.sell-animation {
+  animation-name: sellFlash;
+  animation-duration: 0.2s;
 }
 
 .cell {
-    padding: 4px 16px;
+  padding: 4px 16px;
+}
+
+.tl {
+  text-align: left;
+}
+
+.tr {
+  text-align: right;
 }
